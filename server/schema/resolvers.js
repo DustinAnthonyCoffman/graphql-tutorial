@@ -5,8 +5,8 @@ const resolvers = {
   Query: {
     // USER RESOLVERS
     users: (parent, args, context) => {
-      console.log('here is the context', context)
-      return UserList;
+      if(UserList) return UserList;
+      return {message: 'There was an error'}
     },
     user: (parent, args) => {
       const id = args.id;
@@ -63,6 +63,17 @@ const resolvers = {
       return null;
     },
   },
+  UsersResult: {
+    __resolveType(object) {
+      if(object.users) {
+        return 'UserSuccessfulResult';
+      }
+      if(object.message) {
+        return 'UsersErrorResults';
+      }
+      return null;
+    } 
+  }
 };
 
 module.exports = { resolvers };
