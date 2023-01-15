@@ -4,7 +4,8 @@ const _ = require("lodash");
 const resolvers = {
   Query: {
     // USER RESOLVERS
-    users: () => {
+    users: (parent, args, context) => {
+      console.log('here is the context', context)
       return UserList;
     },
     user: (parent, args) => {
@@ -24,7 +25,8 @@ const resolvers = {
     },
   },
   User: {
-    favoriteMovies: () => {
+    favoriteMovies: (parent) => {
+      console.log('parent is::::', parent)
       return _.filter(
         MovieList,
         (movie) =>
@@ -64,3 +66,4 @@ const resolvers = {
 };
 
 module.exports = { resolvers };
+
